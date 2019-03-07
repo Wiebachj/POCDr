@@ -4,27 +4,22 @@
 \alias{grouping.subsets.FUN}
 \title{grouping into subsets}
 \usage{
-grouping.subsets.FUN(Input = Config$CogDat$Table,
-  Timepoints = Config$parameter$names.Timepoints,
-  Controls = Config$parameter$names.Group$Control,
-  Patients = Config$parameter$names.Group$Patients,
-  names.col = Config$parameter$colnames)
+grouping.subsets.FUN(Input, Timepoint.names, Controls, Patients, names.col)
 }
 \arguments{
 \item{Input}{data frame that contains the complete data}
 
-\item{Timepoints}{names of timepoints}
+\item{Timepoint.names}{names of timepoints}
 
 \item{Controls}{name of control group}
 
 \item{Patients}{names of treatment groups}
 
-\item{CTP.Vars}{data frame with names of CTP variables}
-
-\item{abort.name}{names of columns containing reasons for abort}
-
-\item{CG.cleaning.name}{names of columns containing reasons for abort due to technical or administrative problems}
+\item{names.col}{names of all parameter}
+}
+\value{
+list of separate data frames for each group and timepoint.
 }
 \description{
-grouping into subsets
+This function creates a list of separate data frames for each group and timepoint. By default no further arguments are necessary, as all input variables have pre-defined values.
 }

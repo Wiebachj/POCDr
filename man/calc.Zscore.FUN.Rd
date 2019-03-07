@@ -4,21 +4,19 @@
 \alias{calc.Zscore.FUN}
 \title{calculate Z- scores}
 \usage{
-
-  calc.Zscore.FUN(Input.all = Config$CogDat$CTP.Poled.missForest[grep("Patients.T0",
-  names(Config$CogDat$CTP.Poled.missForest))],
-  Control.all = Config$CogDat$CTP.Poled.missForest[grep("Controls.T0",
-  names(Config$CogDat$CTP.Poled.missForest))], Timepoint.all = "T0",
-  CTPs.names = Config$parameter$colnames.CTPs)
+calc.Zscore.FUN(Input.all, Control.all, Timepoint.names, CTP.names)
 }
 \arguments{
-\item{Input}{data frame with uncorrected change score of patients group}
+\item{Input.all}{list of data frames with corrected change score of patients group}
 
-\item{Control}{control group}
+\item{Control.all}{list of data frames with corrected change score of control group}
 
 \item{Timepoint.names}{names of the test timepoints}
 
 \item{CTP.names}{names of CTP tests}
+}
+\value{
+list of data frames with calculated z scores
 }
 \description{
 calculate Z- scores

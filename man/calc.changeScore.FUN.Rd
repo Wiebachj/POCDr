@@ -4,16 +4,17 @@
 \alias{calc.changeScore.FUN}
 \title{calculation of change scores}
 \usage{
-calc.changeScore.FUN(Input = Config$CogDat$CTP.Poled.missForest,
-  Timepoint.names = Config$parameter$names.Timepoints,
-  Groups = names(Config$parameter$names.Group))
+calc.changeScore.FUN(Input, Timepoint.names, Groups)
 }
 \arguments{
-\item{Input}{data frame with poled CTPs}
+\item{Input}{list of data frames with poled CTPs}
 
 \item{Timepoint.names}{names of the test timepoints}
 
 \item{Groups}{Groups of Treatment used for the sublists e.g. Patients and Controls}
+}
+\value{
+list of data frames with calculated change scores
 }
 \description{
 calculation of change scores

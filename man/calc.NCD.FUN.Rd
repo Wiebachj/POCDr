@@ -4,23 +4,26 @@
 \alias{calc.NCD.FUN}
 \title{calculate NCD}
 \usage{
-
-  calc.NCD.FUN(Input.all = Config$CogDat$CTP.Poled.missForest[grep("Patients",
-  names(Config$CogDat$CTP.Poled.missForest))],
-  Control.all = Config$CogDat$CTP.Poled.missForest[grep("Controls",
-  names(Config$CogDat$CTP.Poled.missForest))],
-  impairment = Config$CogDat$CTPs.control.clean.interim[grep("Patients",
-  names(Config$CogDat$CTPs.control.clean.interim))],
-  Timepoint.all = "T0", CTPs.names = Config$parameter$colnames.CTPs)
+calc.NCD.FUN(Input.all, Control.all, impairment, Timepoint.names,
+  CTP.names, CTP.number, NCD.names)
 }
 \arguments{
-\item{Input}{data frame CTPs}
+\item{Input.all}{list fo data frames containing CTPs of patients group}
 
-\item{Control}{control group}
+\item{Control.all}{list fo data frames containing CTPs of control group}
+
+\item{impairment}{list of data frames containing the information about the impairment of the patients}
 
 \item{Timepoint.names}{names of the test timepoints}
 
 \item{CTP.names}{names of CTP tests}
+
+\item{CTP.number}{numer of used CTP test}
+
+\item{NCD.names}{name of column containing the variables for impairment}
+}
+\value{
+list of data frames comtaining NCD diagnosis for each patient
 }
 \description{
 calculate NCD

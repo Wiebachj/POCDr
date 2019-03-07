@@ -4,15 +4,17 @@
 \alias{calc.combined.Zscore.FUN}
 \title{calculate combined Z- scores}
 \usage{
-
-  calc.combined.Zscore.FUN(Input.all = Config$CogDat$no_imp$Zscore.Baseline.Patients,
-  Control.all = Config$CogDat$no_imp$Zscore.Baseline.Control,
-  Timepoint.all = "T0")
+calc.combined.Zscore.FUN(Input.all, Control.all, Timepoint.names)
 }
 \arguments{
-\item{Input}{data frame containing RCI values for each CTP}
+\item{Input.all}{list of data frames containing z score for each CTP of patients group}
 
-\item{Control}{control group}
+\item{Control.all}{list of data frames containing z score for each CTP of control group}
+
+\item{Timepoint.names}{names of the test timepoints}
+}
+\value{
+list of data frames with combine scores
 }
 \description{
 calculate combined Z- scores

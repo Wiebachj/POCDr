@@ -4,19 +4,17 @@
 \alias{random_forest.FUN}
 \title{random forest imputation - version 1}
 \usage{
-random_forest.FUN(Input = Config$CogDat$CTPs.participate,
-  Timepoints.names = Config$parameter$names.Timepoints, seed = 145,
-  CTP.names = Config$parameter$colnames.CTPs)
+random_forest.FUN(Input, seed = 145, CTP.names)
 }
 \arguments{
-\item{Input}{data frame with CTPs and cleaning variable}
+\item{Input}{list of data frames with CTPs and cleaning variable}
+
+\item{seed}{set seed for reproducible results}
 
 \item{CTP.names}{names of CTP tests}
-
-\item{Timepoint.names}{names of the test timepoints}
 }
 \value{
-data frame with rendom forest imputed values
+list of data frames with rendom forest imputed values
 }
 \description{
 random forest imputation - version 1

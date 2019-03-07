@@ -4,24 +4,25 @@
 \alias{rci.diagnosis.FUN}
 \title{calculate POCD criteria 7, 8, 9 according to Rasmussen et al. (2001)}
 \usage{
-
-  rci.diagnosis.FUN(RCI.All = Config$CogDat$no_imp$Zscore.Baseline.Patients,
-  thresh = -1.96, hit = 2,
-  RCI.Combined = Config$CogDat$no_imp$Zscore.combined.Baseline.Patients,
-  Timepoint.all = "T0", Diagnose = "PreCI")
+rci.diagnosis.FUN(RCI.All, thresh = -1.96, hit = 2, RCI.Combined,
+  Timepoint.names, Diagnose = "PreCI")
 }
 \arguments{
-\item{RCI.All}{data frame containing RCI values for each CTP}
+\item{RCI.All}{list of data frames containing z scores for each CTP}
 
 \item{thresh}{threshhold; Z values below this threshhold are classified as "hit"; default is -1.96}
 
 \item{hit}{how many "hits" are necessary for single POCD diagnosis; default is 2}
 
-\item{RCI.Combined}{data frame containing combined RCI values for each CTP}
+\item{RCI.Combined}{list of data frames containing combined z scores for each CTP}
+
+\item{Timepoint.names}{names of the test timepoints}
+
+\item{Diagnose}{name of Diagnosis by a hit , e.g. PreCI or POCD}
 }
 \value{
-POCD.Diagnosis: List with data frames containing final POCD diagnosis
+List with data frames containing final POCD diagnosis
 }
 \description{
-calculate POCD criteria 7, 8, 9 according to Rasmussen et al. (2001)
+function for calculation POCD criteria 7, 8, 9 according to Rasmussen et al. (2001)
 }

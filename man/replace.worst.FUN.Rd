@@ -4,21 +4,20 @@
 \alias{replace.worst.FUN}
 \title{replace missings due to physical impairment with worst performance}
 \usage{
-replace.worst.FUN(Input = Config$CogDat$CTPs.control.clean,
-  CTP.names = Config$parameter$colnames.CTPs,
-  polarity = Config$parameter$PoledVars, pattern = "worst performance")
+replace.worst.FUN(Input, CTP.names, polarity,
+  pattern = "worst performance")
 }
 \arguments{
-\item{Input}{data frame with CTPs and cleaning variable}
+\item{Input}{ist of data frames with CTPs and information about health condition}
 
 \item{CTP.names}{names of CTP tests}
 
-\item{poor.health}{name of variable coding poor health condition}
+\item{polarity}{information about the polarity of the CTP tests}
 
-\item{patterns}{string pattern, which match with problematic measures}
+\item{pattern}{string pattern, which match with problematic measures}
 }
 \value{
-data frame with worst performanced imputated values
+list of data frames with worst performanced imputated values
 }
 \description{
 replace missings due to physical impairment with worst performance

@@ -4,19 +4,19 @@
 \alias{correct.changeScore.FUN}
 \title{corrected change scores}
 \usage{
-correct.changeScore.FUN(Input = Config$CogDat$no_imp$CS.Delta$Patients,
-  Control = Config$CogDat$no_imp$CS.Delta$Controls,
-  Timepoint.names = Config$parameter$names.Timepoints,
-  CTP.names = Config$parameter$colnames.CTPs)
+correct.changeScore.FUN(Input, Control, Timepoint.names, CTP.names)
 }
 \arguments{
-\item{Input}{data frame with uncorrected change score of patients group}
+\item{Input}{list of data frames with uncorrected change score of patients group}
+
+\item{Control}{list of data frames with uncorrected change score of control group}
 
 \item{Timepoint.names}{names of the test timepoints}
 
 \item{CTP.names}{names of CTP tests}
-
-\item{meanControl}{mean of control group, which is divided of change score}
+}
+\value{
+list of data frames with corrected change scores
 }
 \description{
 corrected change scores

@@ -4,13 +4,15 @@
 \alias{check.colnames.FUN}
 \title{check rawdata for consistence}
 \usage{
-check.colnames.FUN(Input = Config$info.table,
-  required.colnames = required.colnames.config.file)
+check.colnames.FUN(Input, required.colnames)
 }
 \arguments{
 \item{Input}{Input table}
 
 \item{required.colnames}{colnames, which are required}
+}
+\value{
+throw out an error if other colnames are needed
 }
 \description{
 check rawdata for consistence

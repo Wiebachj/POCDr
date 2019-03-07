@@ -160,7 +160,7 @@ replace.worst.FUN = function(Input,# = Config$CogDat$CTPs.control.clean,
 
   # replace missings due to physical impairment with worst performance
   for (i in colnames(df)) {
-    CTPs[,i] <- ifelse(In[grep("Comment", colnames(In))] == pattern,
+    CTPs[,i] <- ifelse(In[grep("Comment", colnames(In))] == pattern & is.na(In[,i]),
                       worst.performance[i], In[,i])
     colnames(CTPs[,i]) <- i
 

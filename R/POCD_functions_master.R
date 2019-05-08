@@ -254,14 +254,14 @@ calc.NCD.FUN <- function (   Input.all,#   = Config$CogDat$CTP.Poled.missForest[
 
     Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp == FALSE |
                            Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == TRUE  |
-                           Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == NA    |
+                           Score[[Timepoint]]$score == 1 & is.na(Score[[Timepoint]]$imp)   |
                            Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == FALSE ] <- "mild"
 
     Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 0 & Score[[Timepoint]]$imp == TRUE |
-                           Score[[Timepoint]]$score == 0 & Score[[Timepoint]]$imp == NA    |
+                           Score[[Timepoint]]$score == 0 & is.na(Score[[Timepoint]]$imp)    |
                            Score[[Timepoint]]$score == 0 & Score[[Timepoint]]$imp == FALSE  ] <-   FALSE
 
-    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp == NA] <- NA
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & is.na(Score[[Timepoint]]$imp)] <- NA
 
 
 colnames(Score[[Timepoint]])[which(colnames(Score[[Timepoint]]) %in% c("score","imp","NCD"))] <- c(paste0(Timepoint, c("_score","_impair","_NCD" )))

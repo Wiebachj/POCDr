@@ -186,7 +186,7 @@ rci.diagnosis.FUN = function(RCI.All,# = Config$CogDat$imp$Zscore.Baseline.Patie
     Zscore.combined  = RCI.comb < thresh)
 
   # POCD criterium 9: either deterioration in 2 or more CTPs < -1.96 or combined Z score < -1.96
-  POCD.Diagnosis.9[[Timepoint]] = plyr::join_all(list(POCD.Diagnosis.8, POCD.Diagnosis.7), by="SubjectID") %>% plyr::mutate(Diag = rowSums(.[2:3])>=1) %>% plyr::rename(c("Diag" = Diagnose))
+  POCD.Diagnosis.9[[Timepoint]] = plyr::join_all(list(POCD.Diagnosis.8, POCD.Diagnosis.7), by="SubjectID") %>% plyr::mutate(Diag = rowSums(rlang::.data[2:3])>=1) %>% plyr::rename(c("Diag" = Diagnose))
   colnames(POCD.Diagnosis.9[[Timepoint]])[-1] <- paste0(Timepoint,".", colnames(POCD.Diagnosis.9[[Timepoint]])[-1])
   colnames(POCD.Diagnosis.9[[Timepoint]][]) <- paste0(Timepoint,".", colnames(POCD.Diagnosis.9[[Timepoint]])[-1])
   return(POCD.Diagnosis.9)

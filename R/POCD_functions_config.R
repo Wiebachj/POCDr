@@ -22,6 +22,7 @@ check.colnames.FUN <- function(Input, # = Config$info.table,
 #' @importFrom magrittr %>%
 #' @importFrom dplyr rename_at
 #' @importFrom dplyr select
+#' @importFrom rlang .data
 #' @param Input data frame that contains the complete data
 #' @param Timepoint.names names of timepoints
 #' @param Controls name of control group
@@ -44,14 +45,14 @@ grouping.subsets.FUN = function(
   CTPs = list()
 
   for (i in Timepoint.names) {
-    CTPs[[paste0("Patients.", i)]] = Input %>% subset(Group %in% Patients) %>%
-      dplyr::select(SubjectID, Group, grep( i, names.col, value = T))
+    CTPs[[paste0("Patients.", i)]] = Input %>% subset(rlang::.data$Group %in% Patients) %>%
+      dplyr::select(rlang::.data$SubjectID, rlang::.data$Group, grep( i, names.col, value = T))
 
   }
 
  for (i in Timepoint.names) {
-    CTPs[[paste0("Controls.", i)]] = Input %>% subset(Group %in% Controls) %>%
-      dplyr::select(SubjectID, Group, grep( i, names.col, value = T))
+    CTPs[[paste0("Controls.", i)]] = Input %>% subset(rlang::.data$Group %in% Controls) %>%
+      dplyr::select(rlang::.data$SubjectID, rlang::.data$Group, grep( i, names.col, value = T))
  }
 
   return(CTPs)

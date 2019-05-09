@@ -45,13 +45,13 @@ grouping.subsets.FUN = function(
   CTPs = list()
 
   for (i in Timepoint.names) {
-    CTPs[[paste0("Patients.", i)]] = Input %>% subset(rlang::.data$Group %in% Patients) %>%
+    CTPs[[paste0("Patients.", i)]] = Input %>% subset(Group %in% Patients) %>%
       dplyr::select(rlang::.data$SubjectID, rlang::.data$Group, grep( i, names.col, value = T))
 
   }
 
  for (i in Timepoint.names) {
-    CTPs[[paste0("Controls.", i)]] = Input %>% subset(rlang::.data$Group %in% Controls) %>%
+    CTPs[[paste0("Controls.", i)]] = Input %>% subset(Group %in% Controls) %>%
       dplyr::select(rlang::.data$SubjectID, rlang::.data$Group, grep( i, names.col, value = T))
  }
 

@@ -2,7 +2,7 @@ Package: POCDr
 Type: Package
 Title: POCDdiagnosis
 Version: 0.1.3
-Imports: foreign, dplyr, plyr, stats, missForest, magrittr, tidyr
+Imports: foreign, dplyr, plyr, stats, missForest, magrittr, tidyr, rlang
 Authors@R: as.person(c(
     "Janine Wiebach <janine.wiebach@charite.de> [aut, cre]",
     "Wolf-R. Brockhaus <w.brockhaus@fu-berlin.de> [aut]"

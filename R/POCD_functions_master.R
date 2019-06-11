@@ -200,7 +200,7 @@ rci.diagnosis.FUN = function(RCI.All,# = Config$CogDat$imp$Zscore.Baseline.Patie
 
 ############################################################################
 
-#' calculate NCD
+#' calculate NCD with one dichotom. parameter
 #'
 #' @param Input.all list fo data frames containing CTPs /RCIs of patients group
 #' @param Control.all list fo data frames containing CTPs/RCIs of control group
@@ -273,5 +273,88 @@ Score[[Timepoint]]$SubjectID <- row.names(Score[[Timepoint]])
   NCDscore <- unlist(NCDscore, recursive = F)
 
     return(NCDscore)
+
+}
+
+############################################################################
+
+#' calculate NCD with two dichotom parameter
+#'
+#' @param Input.all list fo data frames containing CTPs /RCIs of patients group
+#' @param Control.all list fo data frames containing CTPs/RCIs of control group
+#' @param Timepoint.names names of the test timepoints
+#' @param CTP.names names of CTP tests
+#' @param CTP.number numer of used CTP test
+#' @param impairment list of data frames containing the information about the impairment of the patients in logicals (TRUE, FALSE NA)
+#' @param NCD.names.1 name of column containing the variables for functional impairment
+#' @param NCD.names.2 name of column containing the variables for cognitive impairment
+#' @return list of data frames comtaining NCD diagnosis for each patient
+#' @export calc.NCD.FUN
+
+calc.NCD.2.FUN <- function (   Input.all,#   = Config$CogDat$CTP.Poled.missForest[grep("Patients", names(Config$CogDat$CTP.Poled.missForest))],
+  Control.all,# = Config$CogDat$CTP.Poled.missForest[grep("Controls", names(Config$CogDat$CTP.Poled.missForest))],
+  impairment,# = Config$CogDat$CTPs.control.clean.interim[grep("Patients", names(Config$CogDat$CTPs.control.clean.interim))],
+  Timepoint.names,# = "T0",
+  CTP.names,#        = Config$parameter$colnames.CTPs,
+  CTP.number,#       = Config$parameter$N.CTPs,
+  NCD.names.1,#        = Config$parameter$colnames.NCD
+  NCD.names.2)#        = Config$parameter$colnames.NCD_cog
+{
+  Score = list()
+  NCDcalc2.FUN <- function(Timepoint){
+
+    Input   <- Input.all[[grep(Timepoint, names(Input.all))]]
+    Input   <- Input[!is.na(rowSums(Input)),]
+    Control <- Control.all[[grep(Timepoint, names(Control.all))]]
+    Control <- Control[!is.na(rowSums(Control)),]
+    imp     <- impairment[[grep(Timepoint, names(impairment))]]
+    Input <- merge(x = Input,
+                   y = imp[, c("SubjectID", colnames(imp)[colnames(imp) %in% NCD.names.1],
+                                colnames(imp)[colnames(imp) %in% NCD.names.2] )],
+      by.x = "row.names", by.y = "SubjectID",
+      all.x = T  )
+
+
+    Score[[Timepoint]] <- data.frame(sapply(grep(Timepoint, CTP.names, value = T), function(i) {
+
+      Score[[i]][Input[[i]] < magrittr::subtract(mean(Control[[i]], na.rm = T), stats::sd(Control[[i]], na.rm = T)) &
+          Input[[i]] > magrittr::subtract(mean(Control[[i]], na.rm = T), 2*stats::sd(Control[[i]], na.rm = T))] <- 1
+      Score[[i]][Input[[i]] <= magrittr::subtract(mean(Control[[i]], na.rm = T), 2*stats::sd(Control[[i]], na.rm = T))] <- 2
+      Score[[i]][Input[[i]] >= magrittr::subtract(mean(Control[[i]], na.rm = T), stats::sd(Control[[i]], na.rm = T))] <- 0
+
+      return(Score[[i]])
+    }), row.names = Input$Row.names)
+
+    Score[[Timepoint]]$score <- apply(Score[[Timepoint]][,1: CTP.number], 1, max)
+    Score[[Timepoint]]$imp.func   <- Input[[grep("NCD$", colnames(Input))]]
+    Score[[Timepoint]]$imp.cog    <- Input[[grep("NCD_cog$", colnames(Input))]]
+
+    #Score[[Timepoint]] <- data.frame( score = apply(Score[[Timepoint]][,1: CTP.number], 1, max),
+    #                                  impairment = Score[[Timepoint]]$imp)
+
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp.func == TRUE] <- "major"
+
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp.func == FALSE |
+        Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp.cog == TRUE] <- "mild"
+
+    # Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp == FALSE |
+    #     Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == TRUE  |
+    #     Score[[Timepoint]]$score == 1 & is.na(Score[[Timepoint]]$imp)   |
+    #     Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == FALSE ] <- "mild"
+
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 0] <-   FALSE
+
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & is.na(Score[[Timepoint]]$imp.func)] <- NA
+
+
+    colnames(Score[[Timepoint]])[which(colnames(Score[[Timepoint]]) %in% c("score","imp.func","imp.cog","NCD"))] <- c(paste0(Timepoint, c("_score","_func.impairment","_cog.concern","_NCD.Diagnose" )))
+    Score[[Timepoint]]$SubjectID <- row.names(Score[[Timepoint]])
+    return(Score)
+  }
+
+  NCDscore <- lapply(Timepoint.names, NCDcalc2.FUN)
+  NCDscore <- unlist(NCDscore, recursive = F)
+
+  return(NCDscore)
 
 }

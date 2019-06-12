@@ -329,22 +329,17 @@ calc.NCD.2.FUN <- function (   Input.all,#   = Config$CogDat$CTP.Poled.missFores
     Score[[Timepoint]]$imp.func   <- Input[[grep("NCD$", colnames(Input))]]
     Score[[Timepoint]]$imp.cog    <- Input[[grep("NCD_cog$", colnames(Input))]]
 
-    #Score[[Timepoint]] <- data.frame( score = apply(Score[[Timepoint]][,1: CTP.number], 1, max),
-    #                                  impairment = Score[[Timepoint]]$imp)
-
     Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp.func == TRUE] <- "major"
 
     Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp.func == FALSE |
-        Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp.cog == TRUE] <- "mild"
+                           Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp.cog == TRUE] <- "mild"
 
-    # Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & Score[[Timepoint]]$imp == FALSE |
-    #     Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == TRUE  |
-    #     Score[[Timepoint]]$score == 1 & is.na(Score[[Timepoint]]$imp)   |
-    #     Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp == FALSE ] <- "mild"
 
-    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 0] <-   FALSE
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 0|
+                           Score[[Timepoint]]$score == 1 & Score[[Timepoint]]$imp.cog == FALSE]  <-   FALSE
 
-    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & is.na(Score[[Timepoint]]$imp.func)] <- NA
+    Score[[Timepoint]]$NCD[Score[[Timepoint]]$score == 2 & is.na(Score[[Timepoint]]$imp.func)|
+                           Score[[Timepoint]]$score == 1 & is.na(Score[[Timepoint]]$imp.cog)] <- NA
 
 
     colnames(Score[[Timepoint]])[which(colnames(Score[[Timepoint]]) %in% c("score","imp.func","imp.cog","NCD"))] <- c(paste0(Timepoint, c("_score","_func.impairment","_cog.concern","_NCD.Diagnose" )))

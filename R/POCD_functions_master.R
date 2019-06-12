@@ -289,7 +289,7 @@ Score[[Timepoint]]$SubjectID <- row.names(Score[[Timepoint]])
 #' @param NCD.names.1 name of column containing the variables for functional impairment
 #' @param NCD.names.2 name of column containing the variables for cognitive impairment
 #' @return list of data frames comtaining NCD diagnosis for each patient
-#' @export calc.NCD.FUN
+#' @export calc.NCD.2.FUN
 
 calc.NCD.2.FUN <- function (   Input.all,#   = Config$CogDat$CTP.Poled.missForest[grep("Patients", names(Config$CogDat$CTP.Poled.missForest))],
   Control.all,# = Config$CogDat$CTP.Poled.missForest[grep("Controls", names(Config$CogDat$CTP.Poled.missForest))],
